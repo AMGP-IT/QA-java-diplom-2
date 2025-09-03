@@ -36,9 +36,11 @@ public class UserSteps {
         return given()
                 .contentType(ContentType.JSON)
                 .body(user)
+                .log().all()
                 .when()
                 .delete(PATH_DELETE_USER)
                 .then()
+                .log().all()
                 .extract().response();
     }
 

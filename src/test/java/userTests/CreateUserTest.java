@@ -11,6 +11,7 @@ import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
 import static java.net.HttpURLConnection.HTTP_OK;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.UserSteps.createUser;
+import static steps.UserSteps.deleteUser;
 
 public class CreateUserTest extends BaseTest {
     private UserModel userModel;
