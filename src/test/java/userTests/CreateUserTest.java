@@ -1,6 +1,7 @@
 package userTests;
 
 import data.BaseTest;
+import io.qameta.allure.junit4.DisplayName;
 import models.UserModel;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +13,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.UserSteps.createUser;
 import static steps.UserSteps.deleteUser;
 
+@DisplayName("Тесты на создание пользователя")
 public class CreateUserTest extends BaseTest {
     private UserModel userModel;
 
@@ -21,6 +23,7 @@ public class CreateUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Позитивный тест на создание пользователя")
     public void testCreateUserSuccess(){
         createUser(userModel)
                 .then()
@@ -30,6 +33,7 @@ public class CreateUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание пользователя без Email")
     public void testCreateUserWithoutEmailFailure(){
         userModel.setEmail(null);
 
@@ -43,6 +47,7 @@ public class CreateUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание пользователя без Password")
     public void testCreateUserWithoutPasswordFailure(){
         userModel.setPassword(null);
 
@@ -56,6 +61,7 @@ public class CreateUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание пользователя без Name")
     public void testCreateUserWithoutNameFailure(){
         userModel.setName(null);
 
@@ -69,6 +75,7 @@ public class CreateUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание пользователя, который уже зарегистрирован")
     public void testCreateTwoIdenticalUserFailure(){
         createUser(userModel);
         //при повторном создании индентичного юзера поля с токенами обнуляются, поэтому сохраняем токен в переменной, чтобы его удалить в @After

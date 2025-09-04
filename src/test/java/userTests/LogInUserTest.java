@@ -1,6 +1,7 @@
 package userTests;
 
 import data.BaseTest;
+import io.qameta.allure.junit4.DisplayName;
 import models.UserModel;
 import org.junit.After;
 import org.junit.Before;
@@ -11,6 +12,7 @@ import static java.net.HttpURLConnection.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.UserSteps.*;
 
+@DisplayName("Тесты на авторизацию пользователя")
 public class LogInUserTest extends BaseTest {
     private UserModel userModel;
 
@@ -21,6 +23,7 @@ public class LogInUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Позитивный тест на авторизацию пользователя")
     public void logInUserSuccess(){
         logInUser(userModel)
                 .then()
@@ -30,6 +33,7 @@ public class LogInUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на авторизацию пользователя без Email")
     public void logInUserWithoutEmailFailure(){
        UserModel failUserModel = new UserModel(null, userModel.getPassword(), userModel.getName());
        logInUser(failUserModel)
@@ -41,6 +45,7 @@ public class LogInUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на авторизацию пользователя без Password")
     public void logInUserWithoutPasswordFailure(){
         UserModel failUserModel = new UserModel(userModel.getEmail(), null, userModel.getName());
         logInUser(failUserModel)
@@ -52,6 +57,7 @@ public class LogInUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на авторизацию пользователя с неверным Email")
     public void logInUserIncorrectEmailFailure(){
         UserModel failUserModel = new UserModel("test"+userModel.getEmail(), userModel.getPassword(), userModel.getName());
         logInUser(failUserModel)
@@ -63,6 +69,7 @@ public class LogInUserTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на авторизацию пользователя с неверным Password")
     public void logInUserIncorrectPasswordFailure(){
         UserModel failUserModel = new UserModel(userModel.getEmail(), userModel.getPassword()+"test", userModel.getName());
         logInUser(failUserModel)

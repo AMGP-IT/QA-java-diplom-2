@@ -1,6 +1,7 @@
 package orderTests;
 
 import data.BaseTest;
+import io.qameta.allure.junit4.DisplayName;
 import models.IngredientModel;
 import models.OrderModel;
 import models.UserModel;
@@ -16,6 +17,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.OrderSteps.*;
 import static steps.UserSteps.*;
 
+@DisplayName("Тесты на создание заказа")
 public class CreateOrderTest extends BaseTest {
     private OrderModel orderModel;
     private UserModel userModel;
@@ -33,6 +35,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Позитивный тест на создание заказа незарегистрированным пользователем")
     public void createOrderUnregisteredUserSuccess(){
         createOrder(orderModel)
                 .then()
@@ -42,6 +45,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Позитивный тест на создание заказа зарегистрированным пользователем")
     public void createOrderRegisteredUserSuccess(){
         userModel = new UserModel(EMAIL, PASSWORD, FIRST_NAME);
         createUser(userModel);
@@ -56,6 +60,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание заказа с несуществующими id ингредиентов")
     public void createOrderIncorrectIdIngredientFailure(){
         orderModel = new OrderModel(List.of(new String[]{"eqw123", "dsf231"}));
         createOrder(orderModel)
@@ -65,6 +70,7 @@ public class CreateOrderTest extends BaseTest {
     }
 
     @Test
+    @DisplayName("Негативный тест на создание заказа без id ингредиентов")
     public void createOrderWithoutIngredientFailure(){
         orderModel = new OrderModel(null);
         createOrder(orderModel)
@@ -72,6 +78,6 @@ public class CreateOrderTest extends BaseTest {
                 .log().all()
                 .statusCode(HTTP_BAD_REQUEST)
                 .body("success", equalTo(false))
-                .body("message", equalTo("Ingredient ids must be provided"));;
+                .body("message", equalTo("Ingredient ids must be provided"));
     }
 }

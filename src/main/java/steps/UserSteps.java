@@ -1,5 +1,6 @@
 package steps;
 
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import models.UserModel;
@@ -11,6 +12,7 @@ public class UserSteps {
     private static final String PATH_DELETE_USER = "/api/auth/user";
     private static final String PATH_LOGIN_USER = "/api/auth/login";
 
+    @Step("Отправить запрос на создание пользователя и записать токены")
     public static Response createUser(UserModel user){
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -32,6 +34,7 @@ public class UserSteps {
         return response;
     }
 
+    @Step("Отправить запрос на удаление пользователя")
     public static Response deleteUser(UserModel user){
         return given()
                 .contentType(ContentType.JSON)
@@ -42,6 +45,7 @@ public class UserSteps {
                 .extract().response();
     }
 
+    @Step("Отправить запрос на авторизацию пользователя")
     public static Response logInUser(UserModel user){
         return given()
                 .contentType(ContentType.JSON)
