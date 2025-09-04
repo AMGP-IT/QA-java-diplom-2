@@ -2,15 +2,14 @@ package userTests;
 
 import data.BaseTest;
 import models.UserModel;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static data.DataTest.*;
-import static java.net.HttpURLConnection.HTTP_OK;
-import static java.net.HttpURLConnection.HTTP_UNAUTHORIZED;
+import static java.net.HttpURLConnection.*;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static steps.UserSteps.createUser;
-import static steps.UserSteps.logInUser;
+import static steps.UserSteps.*;
 
 public class LogInUserTest extends BaseTest {
     private UserModel userModel;
@@ -72,5 +71,13 @@ public class LogInUserTest extends BaseTest {
                 .statusCode(HTTP_UNAUTHORIZED)
                 .body("success", equalTo(false))
                 .body("message", equalTo("email or password are incorrect"));
+    }
+
+    @After
+    public void cleanUp(){
+        if (userModel != null) {
+            deleteUser(userModel)
+                    .then().statusCode(HTTP_ACCEPTED);
+        }
     }
 }

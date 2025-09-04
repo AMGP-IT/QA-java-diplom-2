@@ -35,12 +35,10 @@ public class UserSteps {
     public static Response deleteUser(UserModel user){
         return given()
                 .contentType(ContentType.JSON)
-                .body(user)
-                .log().all()
+                .header("Authorization", user.getAccessToken())
                 .when()
                 .delete(PATH_DELETE_USER)
                 .then()
-                .log().all()
                 .extract().response();
     }
 

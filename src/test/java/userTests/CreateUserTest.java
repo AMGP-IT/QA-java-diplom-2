@@ -7,8 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static data.DataTest.*;
-import static java.net.HttpURLConnection.HTTP_FORBIDDEN;
-import static java.net.HttpURLConnection.HTTP_OK;
+import static java.net.HttpURLConnection.*;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.UserSteps.createUser;
 import static steps.UserSteps.deleteUser;
@@ -72,19 +71,25 @@ public class CreateUserTest extends BaseTest {
     @Test
     public void testCreateTwoIdenticalUserFailure(){
         createUser(userModel);
+        //при повторном создании индентичного юзера поля с токенами обнуляются, поэтому сохраняем токен в переменной, чтобы его удалить в @After
+        String accessToken = userModel.getAccessToken();
+
         createUser(userModel)
                 .then()
                 .log().all()
                 .statusCode(HTTP_FORBIDDEN)
                 .body("success", equalTo(false))
                 .body("message", equalTo("User already exists"));
+        userModel.setAccessToken(accessToken);
     }
 
 
     @After
     public void cleanUp(){
         if (userModel != null){
-            //deleteUser(userModel);
+            deleteUser(userModel)
+                    .then()
+                    .statusCode(HTTP_ACCEPTED);
         }
     }
 }

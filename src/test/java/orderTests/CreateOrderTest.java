@@ -6,7 +6,6 @@ import models.OrderModel;
 import models.UserModel;
 import org.junit.Before;
 import org.junit.Test;
-import userTests.LogInUserTest;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,12 +16,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static steps.OrderSteps.*;
 import static steps.UserSteps.*;
 
-public class CreateOrder extends BaseTest {
+public class CreateOrderTest extends BaseTest {
     private OrderModel orderModel;
     private UserModel userModel;
 
     @Before
-    public void setUp(){
+    public void setUp(){ //запрашиваю список всех ингредиентов и сохраняю первые два id ингредиентов в список для создания заказа
         List<IngredientModel> ingredients = getDataIngredients();
         ArrayList<String> idIngredients = new ArrayList<>();
 
@@ -48,14 +47,12 @@ public class CreateOrder extends BaseTest {
         createUser(userModel);
         logInUser(userModel);
 
-        createOrder(orderModel)
+        createOrderRegisteredUser(orderModel, userModel)
                 .then()
                 .log().all()
                 .statusCode(HTTP_OK)
                 .body("success", equalTo(true));
-        UserModel asd = new UserModel(null, null, null);
-        asd.setAccessToken(userModel.getAccessToken());
-        deleteUser(asd);
+        deleteUser(userModel);
     }
 
     @Test

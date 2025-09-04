@@ -6,6 +6,7 @@ import io.restassured.response.Response;
 import models.FoodResponseModel;
 import models.IngredientModel;
 import models.OrderModel;
+import models.UserModel;
 
 import java.util.List;
 
@@ -18,6 +19,17 @@ public class OrderSteps {
     public static Response createOrder(OrderModel order){
         return given()
                 .contentType(ContentType.JSON)
+                .body(order)
+                .when()
+                .post(PATH_CREATE_ORDER)
+                .then()
+                .extract().response();
+    }
+
+    public static Response createOrderRegisteredUser(OrderModel order, UserModel user){
+        return given()
+                .contentType(ContentType.JSON)
+                .header("Authorization", user.getAccessToken())
                 .body(order)
                 .when()
                 .post(PATH_CREATE_ORDER)
