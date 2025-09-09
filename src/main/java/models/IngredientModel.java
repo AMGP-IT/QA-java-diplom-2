@@ -1,12 +1,16 @@
 package models;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@AllArgsConstructor
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class IngredientModel {
-    private String _id;
+    @SerializedName("_id")
+    private String id;
     private String name;
     private String type;
     private String proteins;
@@ -15,7 +19,13 @@ public class IngredientModel {
     private String calories;
     private String price;
     private String image;
-    private String image_mobile;
-    private String image_large;
-    private String __v;
+
+    @SerializedName("image_mobile")
+    private String imageMobile;
+
+    @SerializedName("image_large")
+    private String imageLarge;
+
+    @SerializedName("__v")
+    private String version;
 }

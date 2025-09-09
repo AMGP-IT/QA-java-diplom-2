@@ -17,7 +17,7 @@ public class OrderSteps {
     private static final String PATH_GET_DATA_INGREDIENTS = "/api/ingredients";
 
     @Step("Отправить запрос на создание заказа")
-    public static Response createOrder(OrderModel order){
+    public static Response createOrderUnregisteredUser(OrderModel order){
         return given()
                 .contentType(ContentType.JSON)
                 .body(order)
